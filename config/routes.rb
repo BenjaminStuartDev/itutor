@@ -12,12 +12,14 @@ Rails.application.routes.draw do
   get 'users/edit'
   get 'users/update'
   get 'users/destroy'
-  get 'bookings/index'
-  get 'bookings/show'
-  get 'bookings/new'
-  get 'bookings/edit'
-  get 'bookings/update'
-  get 'bookings/destroy'
+
+  resources :bookings, except: :show
+  # get 'bookings/index'
+  # get 'bookings/show'
+  # get 'bookings/new'
+  # get 'bookings/edit'
+  # get 'bookings/update'
+  # get 'bookings/destroy'
 
   # Defines the resourceful routes for the listings controller
   resources :listings
