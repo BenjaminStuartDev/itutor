@@ -18,15 +18,10 @@ Rails.application.routes.draw do
   get 'bookings/edit'
   get 'bookings/update'
   get 'bookings/destroy'
-  get 'listings/index', to: 'listings#index'
-  get 'listings/:id', to: 'listings#show', as: 'listing'
-  get 'listings/new'
-  get 'listings/edit'
-  get 'listings/update'
-  get 'listings/destroy'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  # Defines the resourceful routes for the listings controller
+  resources :listings
 
   # Defines the root path route ("/")
-  # root "articles#index"
-  root 'listings#index', to: 'listing#index'
+  root 'listings#index'
 end
