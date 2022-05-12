@@ -21,10 +21,10 @@ tutor.add_role :tutor
 
 listing = Listing.create(tutor: tutor, title: 'Listing 1', content: 'Some content')
 
-booking = Booking.create(tutor: tutor, student: student, listing: listing, start: DateTime.new(2022, 6, 6, 12, 30, 0),
+booking = Booking.create(student: student, listing: listing, start: DateTime.new(2022, 6, 6, 12, 30, 0),
                          finish: DateTime.new(2022, 6, 6, 13, 30, 0))
 
-review = Review.create(booking: booking, content: 'Some content', rating: 5)
+review = Review.create(tutor: tutor, student: student, content: 'Some content', rating: 5)
 
 subjects = %w[English Maths Science]
 

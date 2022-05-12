@@ -1,7 +1,5 @@
 class Review < ApplicationRecord
-  belongs_to :booking
   # !!!! If not in use REMOVE the has one relationships !!!!!
-  has_one :tutor, through: :booking
-  has_one :student, through: :booking
-  has_one :listing, through: :booking
+  belongs_to :tutor, class_name: 'User'
+  belongs_to :student, class_name: 'User'
 end

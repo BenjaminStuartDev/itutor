@@ -10,7 +10,7 @@ class BookingsController < ApplicationController
 
   def create
     booking_params = params.require(:booking).permit(:tutor, :listing, :start, :finish)
-    booking = Booking.create(student: current_user, **booking_params)
+    Booking.create(student: current_user, **booking_params)
   end
 
   def edit

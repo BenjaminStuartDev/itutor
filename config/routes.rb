@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users
-  get 'reviews/index'
-  get 'reviews/show'
-  get 'reviews/new'
-  get 'reviews/edit'
-  get 'reviews/update'
-  get 'reviews/destroy'
+
+  resources :reviews, except: %i[show new create]
+
+  resources :users do
+    get 'reviews', to: 'reviews#tutor_reviews'
+    post 'reviews', to: 'reviews#create'
+    get 'reviews/new', to: 'reviews#new'
+    resources :bookings, except: :show
+  end
   get 'users/index'
   get 'users/show'
   get 'users/new'
@@ -13,7 +16,6 @@ Rails.application.routes.draw do
   get 'users/update'
   get 'users/destroy'
 
-  resources :bookings, except: :show
   # get 'bookings/index'
   # get 'bookings/show'
   # get 'bookings/new'

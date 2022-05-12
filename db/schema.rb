@@ -15,7 +15,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_11_014553) do
   enable_extension "plpgsql"
 
   create_table "bookings", force: :cascade do |t|
-    t.bigint "tutor_id", null: false
     t.bigint "student_id", null: false
     t.bigint "listing_id", null: false
     t.datetime "start"
@@ -24,7 +23,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_11_014553) do
     t.datetime "updated_at", null: false
     t.index ["listing_id"], name: "index_bookings_on_listing_id"
     t.index ["student_id"], name: "index_bookings_on_student_id"
-    t.index ["tutor_id"], name: "index_bookings_on_tutor_id"
   end
 
   create_table "listings", force: :cascade do |t|
@@ -48,12 +46,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_11_014553) do
   end
 
   create_table "reviews", force: :cascade do |t|
-    t.bigint "booking_id", null: false
+    t.bigint "tutor_id", null: false
+    t.bigint "student_id", null: false
     t.string "content"
     t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["booking_id"], name: "index_reviews_on_booking_id"
+    t.index ["student_id"], name: "index_reviews_on_student_id"
+    t.index ["tutor_id"], name: "index_reviews_on_tutor_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -95,7 +95,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_11_014553) do
 
   add_foreign_key "bookings", "listings"
   add_foreign_key "bookings", "users", column: "student_id"
-  add_foreign_key "bookings", "users", column: "tutor_id"
   add_foreign_key "listings", "users", column: "tutor_id"
-  add_foreign_key "reviews", "bookings"
+  add_foreign_key "reviews", "users", column: "student_id"
+  add_foreign_key "reviews", "users", column: "tutor_id"
 end
