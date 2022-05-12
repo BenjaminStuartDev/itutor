@@ -1,2 +1,34 @@
 <h1>Listings#index</h1>
 <p>Find me in app/views/listings/index.html.erb</p>
+<section class="container">
+  <% @listings.each do |listing| %>
+    <div class="row">
+      <% range = (0...10) %>
+      <% range.each do |card| %>
+        <div class="col-12 col-md-4 col-lg-3 py-2">
+          <div class="card bg-light">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title"> <%= listing.title %></h5>
+              <p class="card-text"> <%= listing.content %></p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </section>
+  <%# <section>
+  <div class="container">
+    <div class="row">
+      <div class="col-6" style="height: 200px">
+        <div class="bg-red h-100 w-100">
+        </div>
+      </div>
+      <div class="col-6" style="height: 200px">
+        <div class="bg-blue h-100 w-100">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> %>

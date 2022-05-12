@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get 'bookings/edit'
   get 'bookings/update'
   get 'bookings/destroy'
-  get 'listings/index'
+  get 'listings/index', to: 'listing#index'
   get 'listings/show'
   get 'listings/new'
   get 'listings/edit'
@@ -28,5 +28,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  root 'listings#index'
+  root 'listings#index', to: 'listing#index'
 end
