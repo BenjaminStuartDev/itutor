@@ -1,9 +1,13 @@
 class ListingsController < ApplicationController
+  before_action :authenticate_user!, except: %i[index]
+  
   def index
     @listings = Listing.all
   end
 
-  def show; end
+  def show
+    @listing = Listing.find(params[:id])
+  end
 
   def new; end
 
