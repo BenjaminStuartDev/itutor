@@ -11,7 +11,6 @@
     <img class="card-img-top" src="..." alt="Card image cap"/>
     <h5 class="card-title"><%= @listing.tutor.name %> </h5>
     <p class="card-text"> <%= @listing.content%> </p>
-    <%= button_to('Schedule Booking', listing, class: 'btn btn-primary', method: :get) %>
   </div>
   <div class="card-footer text-muted">
     <%= @listing.created_at %>

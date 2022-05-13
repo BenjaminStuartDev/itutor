@@ -7,11 +7,14 @@ Rails.application.routes.draw do
     get 'reviews', to: 'reviews#tutor_reviews'
     post 'reviews', to: 'reviews#create'
     get 'reviews/new', to: 'reviews#new'
-    resources :bookings, except: :show
   end
 
+  resources :bookings, except: %i[new create]
+
   # Defines the resourceful routes for the listings controller
-  resources :listings
+  resources :listings do
+    resources :bookings, only: %i[new create]
+  end
 
   # Defines the root path route ("/")
   root 'listings#index'
