@@ -5,6 +5,7 @@ class BookingsController < ApplicationController
   end
 
   def new
+    @listing = Listing.find(params[:listing_id])
     @booking = Booking.new
   end
 
@@ -21,7 +22,7 @@ class BookingsController < ApplicationController
 
   def update
     @booking = Booking.find(params[:id])
-    booking_params = params.require(:booking).permit(:tutor, :listing, :start, :finish)
+    booking_params = params.require(:booking).permit(:start, :finish)
     @booking.update(booking_params)
     redirect_to bookings_path
   end
