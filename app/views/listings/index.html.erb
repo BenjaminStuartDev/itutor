@@ -1,5 +1,6 @@
 <h1>Listings#index</h1>
 <p>Find me in app/views/listings/index.html.erb</p>
+
 <section class="container">
   <% @listings.each do |listing| %>
     <div class="row">
@@ -11,7 +12,7 @@
             <div class="card-body">
               <h5 class="card-title"> <%= listing.title %></h5>
               <p class="card-text"> <%= listing.content %></p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <%= button_to('Show Listing', listing, class: 'btn btn-primary', method: :get) %>
             </div>
           </div>
         </div>
