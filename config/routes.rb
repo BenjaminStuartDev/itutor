@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     get 'reviews/new', to: 'reviews#new'
   end
 
-  resources :bookings, except: %i[new create]
+  resources :bookings, except: %i[new create show]
 
   # Defines the resourceful routes for the listings controller
   resources :listings do
