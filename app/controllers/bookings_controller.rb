@@ -1,7 +1,13 @@
 class BookingsController < ApplicationController
   def index
-    @bookings_tutor = current_user.bookings_as_tutor
-    @bookings_student = current_user.bookings_as_student
+    @all_bookings = []
+    current_user.bookings_as_tutor.each do |booking|
+      @all_bookings << booking
+    end
+    current_user.bookings_as_student.each do |booking|
+      @all_bookings << booking
+    end
+    @all_bookings.sort_by!(&:start)
   end
 
   def new
