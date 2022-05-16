@@ -8,7 +8,7 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    review_params = params.require(:listing).permit(:content, :rating)
+    review_params = params.require(:review).permit(:content, :rating)
     Review.create(student: current_user, tutor_id: params[:user_id], **review_params)
     redirect_to reviews_path
   end
@@ -19,7 +19,7 @@ class ReviewsController < ApplicationController
 
   def update
     @review = Review.find(params[:id])
-    review_params = params.require(:listing).permit(:content, :rating)
+    review_params = params.require(:review).permit(:content, :rating)
     @review.update(review_params)
     redirect_to reviews_path
   end

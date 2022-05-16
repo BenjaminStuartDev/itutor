@@ -1,0 +1,16 @@
+<%= form_with(model: @review, data: {turbo: false}) do |f| %>
+  <fieldset class="mb-2">
+    <%= f.label "Rating" %>
+    <%= f.number_field :rating, in: 1...6, step: 1 %>
+  </fieldset>
+  <fieldset class="mb-2">
+    <%= f.label "Content" %>
+    <%= f.text_area :content %>
+  </fieldset>
+  <fieldset>
+    <%= f.submit class: 'btn btn-primary' %>
+  </fieldset>
+  <fieldset>
+    <%= f.submit class: 'btn btn-primary' %>
+  </fieldset>
+<% end %>
