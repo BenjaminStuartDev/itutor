@@ -1,2 +1,24 @@
 <h1>Users#show</h1>
 <p>Find me in app/views/users/show.html.erb</p>
+<div class="container mt-5">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-7">
+      <div class="card p-3 py-4">
+        <div class="text-center">
+          <img src="https://i.imgur.com/bDLhJiP.jpg" width="100" class="rounded-circle">
+        </div>
+        <div class="text-center mt-3">
+          <h5 class="mt-2 mb-0"><%= @user.name %></h5>
+          <span>Tutor</span>
+          <div class="px-4 mt-1">
+            <p class="fonts"> 'NON implemented BIO' </p>
+          </div>
+          <div class="buttons">
+            <%= link_to 'Listings', reviews_path, class: 'btn btn-primary px-4 ms-3' %>
+            <%= link_to 'Reviews', user_reviews_path(@user), class: 'btn btn-primary px-4 ms-3' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

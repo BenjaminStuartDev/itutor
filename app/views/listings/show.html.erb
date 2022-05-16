@@ -12,6 +12,7 @@
     <h5 class="card-title"><%= @listing.title %> </h5>
     <p class="card-text"> <%= @listing.content%> </p>
     <%= button_to('Schedule Booking', new_listing_booking_path(@listing), class: 'btn btn-primary', method: :get) %>
+    <%= button_to('View Tutor', user_path(@listing.tutor), class: 'btn btn-primary', method: :get) %>
   </div>
   <div class="card-footer text-muted">
     <%= @listing.created_at %>
