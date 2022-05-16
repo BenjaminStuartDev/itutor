@@ -14,7 +14,7 @@ class User < ApplicationRecord
   has_many :reviews, foreign_key: :tutor_id, class_name: 'Review'
 
   def booking_with?(tutor)
-    bookings_as_student.where(tutor: tutor).exists?
+    tutor.bookings_as_tutor.where(student: self).exists?
   end
 
   def reviewed?(tutor)

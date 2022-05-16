@@ -1,14 +1,15 @@
-<%= form_with(model: @review, data: {turbo: false}) do |f| %>
+<%= form_with(model: @listing, data: {turbo: false}) do |f| %>
   <fieldset class="mb-2">
     <%= f.label "Subjects" %>
     <%= f.select :subjects, Subject.pluck(:name) %>
   </fieldset>
   <fieldset class="mb-2">
+    <%= f.label "Title" %>
+    <%= f.text_area :title %>
+  </fieldset>
+  <fieldset class="mb-2">
     <%= f.label "Content" %>
     <%= f.text_area :content %>
-  </fieldset>
-  <fieldset>
-    <%= f.submit class: 'btn btn-primary' %>
   </fieldset>
   <fieldset>
     <%= f.submit class: 'btn btn-primary' %>

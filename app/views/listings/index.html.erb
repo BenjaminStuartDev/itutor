@@ -4,8 +4,6 @@
 <section class="container">
   <% @listings.each do |listing| %>
     <div class="row">
-      <% range = (0...10) %>
-      <% range.each do |card| %>
         <div class="col-12 col-md-4 col-lg-3 py-2">
           <div class="card bg-light">
             <img class="card-img-top" src="..." alt="Card image cap">
@@ -21,7 +19,6 @@
             </div>
           </div>
         </div>
-      <% end %>
     <% end %>
   </section>
   <%# <section>
