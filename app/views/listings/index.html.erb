@@ -13,6 +13,11 @@
               <h5 class="card-title"> <%= listing.title %></h5>
               <p class="card-text"> <%= listing.content %></p>
               <%= button_to('Show Listing', listing, class: 'btn btn-primary', method: :get) %>
+              <% if current_user && listing.already_saved?(current_user) %>
+                <%= button_to('Unsave Listing', watchlist_path(listing.id), class: 'btn btn-primary', method: :delete) %>
+              <% elsif current_user %>
+                <%= button_to('Save Listing', watchlist_index_path(id: listing.id), class: 'btn btn-primary', method: :post) %>
+              <% end %>
             </div>
           </div>
         </div>

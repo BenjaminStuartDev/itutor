@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
+  resources :watchlist, only: %i[index create destroy]
+
   devise_for :users
 
   resources :reviews, except: %i[show new create]
 
-  resources :users, only: [:show] do
-    get 'reviews', to: 'reviews#tutor_reviews'
-    post 'reviews', to: 'reviews#create'
-    get 'reviews/new', to: 'reviews#new'
+  resources :users, only: %i[show] do
+    resources :reviews, only: %i[create new]
   end
 
   resources :bookings, except: %i[new create show]

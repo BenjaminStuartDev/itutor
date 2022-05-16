@@ -3,7 +3,7 @@ class CreateListings < ActiveRecord::Migration[7.0]
     create_table :listings do |t|
       t.references :tutor, null: false, index: true, foreign_key: { to_table: :users }
       t.string :title
-      t.string :content
+      t.text :content
       t.timestamps
     end
   end

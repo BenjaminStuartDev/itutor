@@ -3,11 +3,6 @@ class ReviewsController < ApplicationController
     @reviews = current_user.made_reviews
   end
 
-  def tutor_reviews
-    @user = User.find(params[:user_id])
-    @reviews = @user.reviews
-  end
-
   def new
     @review = Review.new
   end

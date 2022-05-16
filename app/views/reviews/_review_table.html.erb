@@ -1,8 +1,0 @@
-  
-<div class="card-body">
-  <% @reviews.each do |review| %>
-    <h5 class="card-title"> <%= review.student.name %> </h5>
-    <h4 class="card-title"> <%= review.rating %> </h4>
-    <p class="card-text"> <%= review.content %></p>
-  </div>
-<% end %>

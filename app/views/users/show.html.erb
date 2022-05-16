@@ -11,14 +11,26 @@
           <h5 class="mt-2 mb-0"><%= @user.name %></h5>
           <span>Tutor</span>
           <div class="px-4 mt-1">
-            <p class="fonts"> 'NON implemented BIO' </p>
+            <p class="fonts"> <%= @user.bio %> </p>
           </div>
           <div class="buttons">
             <%= link_to 'Listings', reviews_path, class: 'btn btn-primary px-4 ms-3' %>
-            <%= link_to 'Reviews', user_reviews_path(@user), class: 'btn btn-primary px-4 ms-3' %>
           </div>
         </div>
       </div>
+      <% @user.reviews.each do |review| %>
+        <div class="card">
+          <div class="card-header">
+            <%= review.rating%> / 5
+          </div>
+          <div class="card-body">
+            <blockquote class="blockquote mb-0">
+              <p> <%= review.content %> </p>
+              <footer class="blockquote-footer"> <%= review.student.name %> <cite title="Source Title"> (student <%= review.updated_at %>) </cite></footer>
+            </blockquote>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

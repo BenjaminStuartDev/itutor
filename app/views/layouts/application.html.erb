@@ -29,6 +29,12 @@
             <li class="nav-item p-lg-2">
               <%= link_to 'Account Information', user_path(current_user), class: 'btn btn-primary' %>
             </li>
+            <li class="nav-item p-lg-2">
+              <%= link_to 'Watchlist', watchlist_index_path, class: 'btn btn-primary' %>
+            </li>
+            <li class="nav-item p-lg-2">
+              <%= link_to 'Made reviews', reviews_path, class: 'btn btn-primary' %>
+            </li>
           </ul>
         <% else %>
           <div class="btn-toolbar">
