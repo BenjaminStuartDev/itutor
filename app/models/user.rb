@@ -16,4 +16,8 @@ class User < ApplicationRecord
   def booking_with?(tutor)
     bookings_as_student.where(tutor: tutor).exists?
   end
+
+  def reviewed?(tutor)
+    tutor.reviews.where(student: self).exists?
+  end
 end

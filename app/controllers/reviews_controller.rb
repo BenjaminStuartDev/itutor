@@ -10,7 +10,7 @@ class ReviewsController < ApplicationController
   def create
     review_params = params.require(:review).permit(:content, :rating)
     Review.create(student: current_user, tutor_id: params[:user_id], **review_params)
-    redirect_to reviews_path
+    redirect_back(fallback_location: listings_path)
   end
 
   def edit
@@ -21,7 +21,7 @@ class ReviewsController < ApplicationController
     @review = Review.find(params[:id])
     review_params = params.require(:review).permit(:content, :rating)
     @review.update(review_params)
-    redirect_to reviews_path
+    redirect_to @review.tutor
   end
 
   def destroy
