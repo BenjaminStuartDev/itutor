@@ -56,10 +56,10 @@
       </nav>
       <%= yield %>
       <% if notice %>
-        <p class="alert alert-info notice" role="alert"><%= notice %></p>
+        <p class="alert alert-info notice" role="alert"><%= notice.html_safe %></p>
       <% end %>
       <% if alert %>
-        <p class="alert alert-danger" role="alert"><%= alert %></p>
+        <p class="alert alert-danger" role="alert"><%= alert.html_safe %></p>
       <% end %>
     </body>
   </html>

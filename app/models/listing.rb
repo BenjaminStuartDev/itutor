@@ -4,6 +4,8 @@ class Listing < ApplicationRecord
   has_and_belongs_to_many :subjects
   has_many :bookings, dependent: :destroy
 
+  validates :tutor, :title, :content, presence: true
+
   def already_saved?(user)
     user.saved_listings.include?(self)
   end

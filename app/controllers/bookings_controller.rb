@@ -16,10 +16,22 @@ class BookingsController < ApplicationController
   end
 
   def create
-    listing = Listing.find(params[:listing_id])
+    @listing = Listing.find(params[:listing_id])
     booking_params = params.require(:booking).permit(:start, :finish)
-    Booking.create(student: current_user, listing: listing, **booking_params)
-    redirect_to bookings_path
+    @booking = Booking.create(student: current_user, listing: @listing, **booking_params)
+
+    puts "\n" * 5
+    puts @booking.valid?
+    puts @booking.errors.full_messages
+    puts "\n" * 5
+
+    if @booking.valid?
+      redirect_to bookings_path
+    else
+      @booking = Booking.new(student: current_user, listing: @listing, **booking_params)
+      flash.now[:alert] = @booking.errors.full_messages.join('<br>')
+      render 'new'
+    end
   end
 
   def edit
@@ -29,8 +41,13 @@ class BookingsController < ApplicationController
   def update
     @booking = Booking.find(params[:id])
     booking_params = params.require(:booking).permit(:start, :finish)
-    @booking.update(booking_params)
-    redirect_to bookings_path
+    begin
+      @booking.update!(booking_params)
+      redirect_to bookings_path
+    rescue
+      flash.now[:alert] = @booking.errors.full_messages.join('<br>')
+      render 'edit'
+    end
   end
 
   def destroy
