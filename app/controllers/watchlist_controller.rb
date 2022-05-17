@@ -6,12 +6,12 @@ class WatchlistController < ApplicationController
 
   def create
     current_user.saved_listings << @listing
-    redirect_back(fallback_location: listings_path)
+    redirect_to listings_path
   end
 
   def destroy
     current_user.saved_listings.delete(@listing)
-    redirect_back(fallback_location: listings_path)
+    redirect_to listings_path
   end
 
   def set_listing

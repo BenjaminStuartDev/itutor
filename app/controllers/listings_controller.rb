@@ -14,7 +14,6 @@ class ListingsController < ApplicationController
   end
 
   def create
-    @listing = Listing.new(tutor: current_user, **listing_params)
     create_validator(@listing, @listing)
   end
 
@@ -32,6 +31,7 @@ class ListingsController < ApplicationController
   private
 
   def set_listing_subjects
+    @listing = Listing.new(tutor: current_user, **listing_params)
     subject = params[:listing][:subjects]
     @listing.subjects << Subject.find_by(name: subject)
   end

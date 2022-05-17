@@ -1,37 +1,35 @@
 <h1>Listings#index</h1>
 <p>Find me in app/views/listings/index.html.erb</p>
-
 <section class="container">
-  <% @listings.each do |listing| %>
-    <div class="row">
-        <div class="col-12 col-md-4 col-lg-3 py-2">
-          <div class="card bg-light">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title"> <%= listing.title %></h5>
-              <p class="card-text"> <%= listing.content %></p>
-              <%= button_to('Show Listing', listing, class: 'btn btn-primary', method: :get) %>
-              <% if current_user && listing.already_saved?(current_user) %>
-                <%= button_to('Unsave Listing', watchlist_path(listing.id), class: 'btn btn-primary', method: :delete) %>
-              <% elsif current_user %>
-                <%= button_to('Save Listing', watchlist_index_path(id: listing.id), class: 'btn btn-primary', method: :post) %>
-              <% end %>
-            </div>
+  <div class="row">
+    <% @listings.each do |listing| %>
+      <div class="col-12 col-md-4 col-lg-3 py-2">
+        <div class="card border-0">
+          <div class="card-body d-flex flex-column align-items-center">
+            <% if current_user && listing.already_saved?(current_user) %>
+              <div class="position-relative w-100 d-flex justify-content-end">
+                <div class="position-absolute h-100 opacity-0">
+                  <%= button_to('', watchlist_path(listing.id), class: 'w-100 h-100 position-absolute end-0', method: :delete) %>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="blue" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5Z"/></svg>
+              </div>
+            <% elsif current_user %>
+              <div class="position-relative w-100 d-flex justify-content-end">
+                <div class="position-absolute h-100 opacity-0">
+                  <%= button_to('', watchlist_index_path(id: listing.id), class: 'w-100 h-100 position-absolute end-0', method: :post) %>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5c.36 0 .72 0 1.08-.05a6.09 6.09 0 0 1-.08-.95c0-.56.08-1.12.24-1.66c-.41.1-.82.16-1.24.16a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5c0 .29-.03.59-.08.88c.66-.25 1.37-.38 2.08-.38c1.17 0 2.31.34 3.29 1c.27-.5.51-1 .71-1.5c-1.73-4.39-6-7.5-11-7.5M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m6 5.5v3h-3v2h3v3h2v-3h3v-2h-3v-3h-2Z"/></svg>
+              </div>
+            <% end %>
+            <% if current_user.profile_picture.attached? %>
+              <%= cl_image_tag current_user.profile_picture.key, class: 'rounded-circle', crop: :fill, height: 100, aspect_ratio: '1:1', cloud_name: 'dakvf2jcu' %>
+            <% end %>
+            <h5 class="card-title"> <%= listing.title %></h5>
+            <p class="card-text"> <%= listing.content %></p>
+            <%= button_to('Show Listing', listing, class: 'btn btn-primary', method: :get) %>
           </div>
         </div>
+      </div>
     <% end %>
-  </section>
-  <%# <section>
-  <div class="container">
-    <div class="row">
-      <div class="col-6" style="height: 200px">
-        <div class="bg-red h-100 w-100">
-        </div>
-      </div>
-      <div class="col-6" style="height: 200px">
-        <div class="bg-blue h-100 w-100">
-        </div>
-      </div>
-    </div>
   </div>
-</section> %>
+</section>
