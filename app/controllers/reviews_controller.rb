@@ -1,4 +1,6 @@
 class ReviewsController < ApplicationController
+  before_action :set_review, only: %i[edit update destroy]
+  before_action :review_params, only: %i[create update]
   def index
     @reviews = current_user.made_reviews
   end
@@ -9,37 +11,28 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    review_params = params.require(:review).permit(:content, :rating)
     @review = Review.new(student: current_user, tutor_id: params[:user_id], **review_params)
-
-    if @review.valid?
-      @review.save
-      redirect_to @review.tutor
-    else
-      flash.now[:alert] = @review.errors.full_messages.join('<br>')
-      render 'new'
-    end
+    create_validator(@review, @review.tutor)
   end
 
-  def edit
-    @review = Review.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @review = Review.find(params[:id])
-    review_params = params.require(:review).permit(:content, :rating)
-    begin
-      @review.update!(review_params)
-      redirect_to @review.tutor
-    rescue StandardError
-      flash.now[:alert] = @review.errors.full_messages.join('<br>')
-      render 'edit'
-    end
+    update_validator(@review, review_params, @review.tutor)
   end
 
   def destroy
-    @review = Review.find(params[:id])
     @review.destroy
     redirect_to reviews_path
+  end
+
+  private
+
+  def review_params
+    params.require(:review).permit(:content, :rating)
+  end
+
+  def set_review
+    @review = Review.find(params[:id])
   end
 end

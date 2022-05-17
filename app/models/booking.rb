@@ -18,7 +18,6 @@ class Booking < ApplicationRecord
                              .or(tutor_bookings.where('start < :start AND finish > :finish', start: start,
                                                                                              finish: finish))
 
-    # return if (tutor_bookings.length == 1 && tutor_bookings.first != self) || bookings.exists?
     return if (tutor_bookings.length == 1 && tutor_bookings.first != self) || bookings.empty?
 
     errors.add :base, :invalid,
