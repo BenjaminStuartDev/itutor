@@ -11,7 +11,7 @@ class User < ApplicationRecord
   has_many :bookings_as_tutor, through: :listings, source: :bookings
 
   has_many :made_reviews, foreign_key: :student_id, class_name: 'Review'
-  has_many :reviews, foreign_key: :tutor_id, class_name: 'Review'
+  has_many :reviews, foreign_key: :tutor_id, class_name: 'Review', dependent: :destroy
 
   has_one_attached :profile_picture
 
