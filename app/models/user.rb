@@ -15,11 +15,17 @@ class User < ApplicationRecord
 
   has_one_attached :profile_picture
 
+  before_destroy :remove_review_student_id, prepend: true
+
   def booking_with?(tutor)
     tutor.bookings_as_tutor.where(student: self).exists?
   end
 
   def reviewed?(tutor)
     tutor.reviews.where(student: self).exists?
+  end
+
+  def remove_review_student_id
+    made_reviews.update_all(student_id: nil)
   end
 end
