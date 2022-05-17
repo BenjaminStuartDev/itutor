@@ -18,17 +18,12 @@ class BookingsController < ApplicationController
   def create
     @listing = Listing.find(params[:listing_id])
     booking_params = params.require(:booking).permit(:start, :finish)
-    @booking = Booking.create(student: current_user, listing: @listing, **booking_params)
-
-    puts "\n" * 5
-    puts @booking.valid?
-    puts @booking.errors.full_messages
-    puts "\n" * 5
+    @booking = Booking.new(student: current_user, listing: @listing, **booking_params)
 
     if @booking.valid?
       redirect_to bookings_path
+      @booking.save
     else
-      @booking = Booking.new(student: current_user, listing: @listing, **booking_params)
       flash.now[:alert] = @booking.errors.full_messages.join('<br>')
       render 'new'
     end

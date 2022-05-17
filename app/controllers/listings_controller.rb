@@ -1,6 +1,6 @@
 class ListingsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  
+
   def index
     @listings = Listing.all
   end
@@ -15,8 +15,17 @@ class ListingsController < ApplicationController
 
   def create
     listing_params = params.require(:listing).permit(:title, :content)
-    listing = Listing.create(tutor: current_user, **listing_params)
-    redirect_to listing
+    subject = params[:listing][:subjects]
+    @listing = Listing.new(tutor: current_user, **listing_params)
+    @listing.subjects << Subject.find_by(name: subject)
+
+    if @listing.valid?
+      @listing.save
+      redirect_to @listing
+    else
+      flash.now[:alert] = @listing.errors.full_messages.join('<br>')
+      render 'new'
+    end
   end
 
   def edit
@@ -27,7 +36,10 @@ class ListingsController < ApplicationController
     @listing = Listing.find(params[:id])
     listing_params = params.require(:listing).permit(:title, :content)
     @listing.update(listing_params)
-    redirect_to listing
+    @listing.subjects.destroy_all
+    subject = params[:listing][:subjects]
+    @listing.subjects << Subject.find_by(name: subject)
+    redirect_to @listing
   end
 
   def destroy

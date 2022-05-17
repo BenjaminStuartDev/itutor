@@ -33,7 +33,6 @@ subjects.each do |subject|
 end
 
 listing.subjects << Subject.find_by(name: 'English')
-listing.subjects << Subject.find_by(name: 'Maths')
 
 student.saved_listings << listing
 
