@@ -1,7 +1,7 @@
 <%= form_with(model: @listing, data: {turbo: false}) do |f| %>
   <fieldset class="mb-2">
     <%= f.label "Subjects" %>
-    <%= f.select :subjects, Subject.pluck(:name), {multiple: true }%>
+    <%= f.select :subjects, Subject.pluck(:name) %>
   </fieldset>
   <fieldset class="mb-2">
     <%= f.label "Title" %>

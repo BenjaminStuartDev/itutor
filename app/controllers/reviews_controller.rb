@@ -5,12 +5,20 @@ class ReviewsController < ApplicationController
 
   def new
     @review = Review.new
+    @user = User.find(params[:user_id])
   end
 
   def create
     review_params = params.require(:review).permit(:content, :rating)
-    Review.create(student: current_user, tutor_id: params[:user_id], **review_params)
-    redirect_back(fallback_location: listings_path)
+    @review = Review.new(student: current_user, tutor_id: params[:user_id], **review_params)
+
+    if @review.valid?
+      @review.save
+      redirect_to @review.tutor
+    else
+      flash.now[:alert] = @review.errors.full_messages.join('<br>')
+      render 'new'
+    end
   end
 
   def edit
@@ -20,8 +28,13 @@ class ReviewsController < ApplicationController
   def update
     @review = Review.find(params[:id])
     review_params = params.require(:review).permit(:content, :rating)
-    @review.update(review_params)
-    redirect_to @review.tutor
+    begin
+      @review.update!(review_params)
+      redirect_to @review.tutor
+    rescue StandardError
+      flash.now[:alert] = @review.errors.full_messages.join('<br>')
+      render 'edit'
+    end
   end
 
   def destroy
