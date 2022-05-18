@@ -6,10 +6,10 @@ class BookingsController < ApplicationController
 
   def index
     @all_bookings = []
-    current_user.bookings_as_tutor.each do |booking|
+    current_user.bookings_as_tutor.in_future.each do |booking|
       @all_bookings << booking
     end
-    current_user.bookings_as_student.each do |booking|
+    current_user.bookings_as_student.in_future.each do |booking|
       @all_bookings << booking
     end
     @all_bookings.sort_by!(&:start)

@@ -21,15 +21,17 @@
     </div>
     <div class="row justify-content-center">
       <div class="d-flex justify-content-center">
-      <div class="w-50 d-flex justify-content-center">
-        <p> <%= @listing.content %> </p>
-      </div>
+        <div class="w-50 d-flex justify-content-center">
+          <p> <%= @listing.content %> </p>
+        </div>
       </div>
     </div>
     <div class="row justify-content-center">
       <div class="d-flex justify-content-center">
         <% if @listing.tutor != current_user %>
-          <%= button_to('+ Booking', new_listing_booking_path(@listing), class: 'btn btn-outline-dark m-3', method: :get) %>
+          <% if current_user.has_role?(:student) %>
+            <%= button_to('+ Booking', new_listing_booking_path(@listing), class: 'btn btn-outline-dark m-3', method: :get) %>
+          <% end %>
           <%= button_to('View Tutor', user_path(@listing.tutor), class: 'btn btn-outline-dark m-3', method: :get) %>
         <% else %>
           <%= button_to('Edit', edit_listing_path(@listing.id), class: 'btn btn-outline-dark m-3', method: :get)%>

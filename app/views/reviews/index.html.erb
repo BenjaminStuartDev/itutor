@@ -1,10 +1,20 @@
-<h1>Reviews#index</h1>
-<p>Find me in app/views/reviews/index.html.erb</p>
 <div class="container mt-5">
+  <div class="row justify-content-center">
+    <div  class="col-6 text-center p-5">
+      <h1 class="d-inline-block">Made Reviews:</h1>
+    </div>
+  </div>
   <div class="row d-flex justify-content-center">
     <div class="col-md-7">
       <div class="card p-3 py-4">
         <div class="text-center">
+        <% if @reviews.empty? %>
+        <div class="card text-center">
+        <div class="card-header">
+        <h2>Someone knows their routes 👍 / you have made no reviews</h2>
+        </div>
+        </div>
+        <% end %>
           <% @reviews.each do |review| %>
             <div class="card text-center">
               <div class="card-header">
@@ -17,8 +27,10 @@
                 <span> last updated: <%= review.updated_at  %> </span>
               </div>
             </div>
-            <%= button_to('Edit', edit_review_path(review.id), class: 'btn btn-primary', method: :get)%>
-            <%= button_to('Delete', review_path(review.id), class: 'btn btn-primary', method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete your review? " } }) %>
+            <div  class="col-12 col-md-2 d-flex justify-content-md-between">
+              <%= button_to('Edit', edit_review_path(review.id), class: 'btn btn-warning', method: :get)%>
+              <%= button_to('Delete', review_path(review.id), class: 'btn btn-danger mb-4', method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete your review? " } }) %>
+            </div>
           <% end %>
         </div>
       </div>

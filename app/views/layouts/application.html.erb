@@ -22,7 +22,7 @@
                 <%= link_to '+ Listing', new_listing_path, class: 'btn btn-primary' %>
               </li>
             <% end %>
-            <li class="nav-item dropdown p-lg-1">
+            <li class="nav-item dropdown p-lg-1 me-3">
               <a class="btn btn-light dropdown-toggle d-flex align-items-center" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                 <% if current_user.profile_picture.attached? %>
                   <%= cl_image_tag current_user.profile_picture.key, class: 'rounded-circle', crop: :fill, height: 30, aspect_ratio: '1:1', cloud_name: 'dakvf2jcu' %>
@@ -31,7 +31,7 @@
                   <%= current_user.name %>
                 </div>
               </a>
-              <ul class="dropdown-menu py-0" aria-labelledby="dropdownMenuLink">
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li class="nav-item">
                   <%= link_to 'View Profile', user_path(current_user), class: 'btn w-100' %>
                 </li>
@@ -46,9 +46,11 @@
                 <li class="nav-item">
                   <%= link_to 'Account', edit_user_registration_path, class: 'btn w-100' %>
                 </li>
-                <li class="nav-item">
-                  <%= link_to 'My Reviews', reviews_path, class: 'btn w-100' %>
-                </li>
+                <% if current_user.made_reviews.present? %>
+                  <li class="nav-item">
+                    <%= link_to 'My Reviews', reviews_path, class: 'btn w-100' %>
+                  </li>
+                <% end %>
                 <hr class="my-0"/>
                 <li class="nav-item">
                   <%= button_to 'Logout', destroy_user_session_path, class: 'btn w-100', method: :delete, form: { data: { turbo_confirm: "Are you sure you want to log out? " } } %>

@@ -5,7 +5,7 @@ class ReviewsController < ApplicationController
   before_action :check_auth
 
   def index
-    @reviews = current_user.made_reviews
+    @reviews = current_user.made_reviews.order(created_at: :desc)
   end
 
   def new

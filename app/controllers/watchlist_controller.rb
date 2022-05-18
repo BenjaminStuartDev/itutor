@@ -13,7 +13,7 @@ class WatchlistController < ApplicationController
 
   def destroy
     current_user.saved_listings.delete(@listing)
-    redirect_to listings_path
+    redirect_back(fallback_location: root_path)
   end
 
   def set_listing

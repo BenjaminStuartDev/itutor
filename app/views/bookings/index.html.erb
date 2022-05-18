@@ -1,11 +1,50 @@
-<h1>Bookings#index</h1>
-<p>Find me in app/views/bookings/index.html.erb</p>
-<%= @bookings_tutor %>
-<%= @bookings_student %>
-<% @all_bookings.each do |booking| %>
-  <with> <%= booking.start %> with <%= link_to("#{booking.tutor.name}", user_path(booking.tutor.id))%> </p>
-  <div class="btn-toolbar">
-    <%= link_to('Edit', edit_booking_path(booking), class: 'btn btn-warning me-2')%>
-    <%= button_to('Delete', booking, class: 'btn btn-danger', method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete this booking ?" } })%>
+<section class="container">
+  <div class="row justify-content-center">
+    <div  class="col-6 text-center p-5">
+      <h1 class="d-inline-block">Bookings:</h1>
+    </div>
   </div>
-<% end %>
+  <div class="row justify-content-center d-none d-md-flex">
+    <% col_length = %w[2 3 2 3] %>
+    <% %w[Type Timeslot Tutor Email ].each_with_index do |heading, index| %>
+      <div  class="col-<%= col_length[index] %>">
+        <h2 class="d-inline-block"><%= heading %></h2>
+      </div>
+    <% end %>
+    <div  class="col-2">
+    </div>
+  </div>
+  <% @all_bookings.each do |booking| %>
+    <div class="row card bg-light flex-column flex-md-row justify-content-center align-items-center">
+      <div  class="col-12 col-md-2">
+        <h1 class="d-md-none"> Type </h1>
+        <% if booking.tutor == current_user %>
+          <p class="d-inline-block"> Teaching </p>
+        <% else %>
+          <p class="d-inline-block"> studying </p>
+        <% end %>
+      </div>
+      <div  class="col-12 col-md-3">
+        <h1 class="d-md-none"> Timeslot </h1>
+        <p class="d-inline-block"> <%= booking.start %> to <%= booking.finish %> </p>
+      </div>
+      <div  class="col-12 col-md-2">
+        <h1 class="d-md-none"> Tutor </h1>
+        <p class="d-inline-block"> <%= link_to("#{booking.tutor.name}", user_path(booking.tutor.id))%> </p>
+      </div>
+      <div  class="col-12 col-md-3">
+        <% if booking.tutor == current_user %>
+          <h1 class="d-md-none"> Email </h1>
+          <p class="d-inline-block"> <%= booking.student.email %> </p>
+        <% else %>
+          <h1 class="d-md-none"> Email </h1>
+          <p class="d-inline-block"> <%= booking.tutor.email %> </p>
+        <% end %>
+      </div>
+      <div  class="col-12 col-md-2 d-flex justify-content-md-between">
+        <%= link_to('Edit', edit_booking_path(booking), class: 'btn btn-warning m-2 m-md-0') unless booking.tutor == current_user %>
+        <%= button_to('Delete', booking, class: 'btn btn-danger m-2 m-md-0', method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete this booking ?" } })%>
+      </div>
+    </div>
+  <% end %>
+</section>

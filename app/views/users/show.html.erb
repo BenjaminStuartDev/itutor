@@ -1,59 +1,73 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
-<div class="container mt-5">
-  <div class="row d-flex justify-content-center">
-    <div class="col-md-7">
-      <div class="card p-3 py-4">
-        <div class="text-center">
-          <% if @user.profile_picture.attached? %>
-            <%= cl_image_tag @user.profile_picture.key, crop: :scale, width: 150, cloud_name: 'dakvf2jcu' %>
-          <% end %>
-        </div>
-        <div class="text-center mt-3">
-          <h5 class="mt-2 mb-0"><%= @user.name %></h5>
-          <span>Tutor</span>
-          <div class="px-4 mt-1">
-            <p class="fonts"> <%= @user.bio %> </p>
-          </div>
-          <div class="buttons">
-            <% if current_user.reviewed?(@user) && current_user != @user && current_user.reviewed?(@user) && current_user %>
-              <%= button_to('Edit Review', edit_review_path(current_user.made_reviews.find_by(tutor: @user).id), class: 'btn btn-primary', method: :get)%>
-            <% elsif current_user && current_user != @user && current_user.booking_with?(@user)%>
-              <%= link_to 'Make Review', new_user_review_path(@user.id), class: 'btn btn-primary px-4 ms-3' %>
+<section>
+  <div class="container mt-5 mb-5">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-7">
+        <div class="card p-3 py-4">
+          <div class="text-center">
+            <% if @user.profile_picture.attached? %>
+              <%= cl_image_tag @user.profile_picture.key, crop: :scale, width: 150, cloud_name: 'dakvf2jcu' %>
             <% end %>
           </div>
-        </div>
-      </div>
-      <% @user.reviews.each do |review| %>
-        <div class="card">
-          <div class="card-header">
-            <%= review.rating%> / 5
+          <div class="text-center mt-3">
+            <h5 class="mt-2 mb-0"><%= @user.name %></h5>
+            <% @user.roles.each_with_index do |role, index| %>
+              <span><%= role.name.capitalize %><% if index != @user.roles.count - 1 %>,<% end %>
+              </span>
+            <% end %>
+            <div class="px-4 mt-1">
+              <p class="fonts"> <%= @user.bio %> </p>
+            </div>
+            <div class="buttons">
+              <% if current_user.reviewed?(@user) && current_user != @user && current_user.reviewed?(@user) && current_user %>
+                <%= button_to('Edit Review', edit_review_path(current_user.made_reviews.find_by(tutor: @user).id), class: 'btn btn-primary', method: :get)%>
+              <% elsif current_user && current_user != @user && current_user.booking_with?(@user)%>
+                <%= link_to 'Make Review', new_user_review_path(@user.id), class: 'btn btn-primary px-4 ms-3' %>
+              <% end %>
+            </div>
           </div>
-          <div class="card-body">
-            <blockquote class="blockquote mb-0">
-              <p> <%= review.content %> </p>
-              <footer class="blockquote-footer"> <%= review.student.name %> <cite title="Source Title"> (student <%= review.updated_at %>) </cite></footer>
-            </blockquote>
-          </div>
         </div>
-      <% end %>
-    </div>
-  </div>
-</div>
-<% @user.listings.each do |listing| %>
-  <div class="col-12 col-md-4 col-lg-3 py-2">
-    <div class="card bg-light">
-      <img class="card-img-top" src="..." alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title"> <%= listing.title %></h5>
-        <p class="card-text"> <%= listing.content %></p>
-        <%= button_to('Show Listing', listing, class: 'btn btn-primary', method: :get) %>
-        <% if current_user && listing.already_saved?(current_user) %>
-          <%= button_to('Unsave Listing', watchlist_path(listing.id), class: 'btn btn-primary', method: :delete) %>
-        <% elsif current_user %>
-          <%= button_to('Save Listing', watchlist_index_path(id: listing.id), class: 'btn btn-primary', method: :post) %>
-        <% end %>
       </div>
     </div>
   </div>
+</section>
+<% if @user.reviews.first.present?%>
+  <section class="container-fluid mb-5">
+    <div class="row justify-content-center">
+      <div class="col-7">
+        <h2 class="inline-block"> <%= @user.name%>'s reviews </h2>
+        <div class="accordion" id="accordionExample">
+          <% @user.reviews.order(created_at: :desc).each do |review| %>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="heading<%= review.id %>">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= review.id %>" aria-expanded="true" aria-controls="collapse<%= review.id %>">
+                  <%= review.rating%> / 5 by <%= review.student.name %> <cite title="Source Title"> (student <%= review.updated_at %>) </cite>
+                </button>
+              </h2>
+              <div id="collapse<%= review.id %>" class="accordion-collapse collapse" aria-labelledby="heading<%= review.id %>" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <%= review.content %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
 <% end %>
+<section class="container mb-5">
+  <div class="row">
+    <h2 class="inline-block"> <%= @user.name%>'s Listings: </h2>
+    <% @user.listings.each do |listing| %>
+      <div class="col-12 col-md-4 col-lg-3 py-2">
+        <div class="card border-0">
+          <div class="card-body d-flex flex-column align-items-center">
+            <h5 class="card-title pt-3"> <%= listing.title %></h5>
+            <p class="card-text text-center"> <%= truncate(listing.content, length: 125, omission: '...') %></p>
+            <%= button_to('Show Listing', listing, class: 'btn btn-primary', method: :get) %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>

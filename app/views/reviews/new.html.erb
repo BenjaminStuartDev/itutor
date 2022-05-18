@@ -1,6 +1,22 @@
 <h1>Reviews#new</h1>
 <p>Find me in app/views/reviews/new.html.erb</p>
-
-<%= form_with(model: @review, url: [@user, @review], data: {turbo: false}, method: 'post') do |f| %>
-    <%= render partial: 'form', locals: { f: f } %>
-<% end %>
+<section class="m-3">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div  class="col-md-3">
+      </div>
+      <div  class="col-6">
+        <h5 class="d-inline-block">New Review: </h5>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div  class="col-md-3">
+      </div>
+      <div class="col-6">
+        <%= form_with(model: @review, url: [@user, @review], data: {turbo: false}, method: 'post') do |f| %>
+          <%= render partial: 'form', locals: { f: f } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

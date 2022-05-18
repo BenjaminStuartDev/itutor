@@ -13,7 +13,7 @@ class BookingPolicy
   end
 
   def create?
-    @user&.has_any_role?(:tutor, :student)
+    @user&.has_role?(:student)
   end
 
   def new?

@@ -8,7 +8,17 @@ class Booking < ApplicationRecord
   validates :start, presence: true
   validates :finish, comparison: { greater_than: :start }
   validate :booking_cannot_be_at_same_time_as_another_booking,
-           :start_cannot_be_in_the_past
+           :start_cannot_be_in_the_past, :user_must_be_student
+
+  def self.in_future
+    where('start > :start', start: Time.zone.now.to_datetime)
+  end
+
+  def user_must_be_student
+    return if !start || !finish || student.has_role?(:student)
+
+    errors.add(:student, 'must have student role. To change roles see Account')
+  end
 
   def booking_cannot_be_at_same_time_as_another_booking
     return if !start || !finish
