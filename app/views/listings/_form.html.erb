@@ -1,15 +1,15 @@
 <%= form_with(model: @listing, data: {turbo: false}) do |f| %>
-  <fieldset class="mb-2">
-    <%= f.label "Subjects" %>
+  <fieldset class="mb-3 d-flex flex-column col-3">
+    <%= f.label "Subjects"%>
     <%= f.select :subjects, Subject.pluck(:name) %>
   </fieldset>
-  <fieldset class="mb-2">
+  <fieldset class="mb-3 d-flex flex-column">
     <%= f.label "Title" %>
-    <%= f.text_area :title %>
+    <%= f.text_field :title %>
   </fieldset>
-  <fieldset class="mb-2">
+  <fieldset class="mb-3 d-flex flex-column">
     <%= f.label "Content" %>
-    <%= f.text_area :content %>
+    <%= f.text_area :content, class: "" %>
   </fieldset>
   <fieldset>
     <%= f.submit class: 'btn btn-primary' %>

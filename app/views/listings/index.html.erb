@@ -24,8 +24,8 @@
             <% if listing.tutor.profile_picture.attached? %>
               <%= cl_image_tag listing.tutor.profile_picture.key, class: 'rounded-circle', crop: :fill, height: 100, aspect_ratio: '1:1', cloud_name: 'dakvf2jcu' %>
             <% end %>
-            <h5 class="card-title"> <%= listing.title %></h5>
-            <p class="card-text"> <%= listing.content %></p>
+            <h5 class="card-title pt-3"> <%= listing.title %></h5>
+            <p class="card-text text-center"> <%= truncate(listing.content, length: 125, omission: '...') %></p>
             <%= button_to('Show Listing', listing, class: 'btn btn-primary', method: :get) %>
           </div>
         </div>

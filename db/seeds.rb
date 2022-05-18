@@ -25,15 +25,13 @@ subjects.each do |subject|
   Subject.create(name: subject)
 end
 
-listing = Listing.create(tutor: tutor, title: 'Listing 1', content: 'Some content', subjects: subjects.first)
+listing = Listing.create(tutor: tutor, title: 'Listing 1', content: 'Some content')
+listing.subjects << Subject.find_by(name: 'English')
 
-booking = Booking.create(student: student,  listing: listing, start: DateTime.new(2022, 6, 6, 12, 30, 0),
+p booking = Booking.create(student: student,  listing: listing, start: DateTime.new(2022, 6, 6, 12, 30, 0),
                          finish: DateTime.new(2022, 6, 6, 13, 30, 0))
 
-review = Review.create(tutor: tutor, student: student, content: 'Some content', rating: 5)
-
-
-listing.subjects << Subject.find_by(name: 'English')
+p review = Review.create(tutor: tutor, student: student, content: 'Some content', rating: 5)
 
 student.saved_listings << listing
 

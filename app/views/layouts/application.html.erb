@@ -17,9 +17,11 @@
       <div class="collapse navbar-collapse d-lg-flex justify-content-end" id="navbarSupportedContent">
         <% if user_signed_in?%>
           <ul class="navbar-nav" >
-            <li class="nav-item p-lg-2">
-              <%= link_to '+ Listing', new_listing_path, class: 'btn btn-primary' %>
-            </li>
+            <% if current_user.has_role?(:tutor) %>
+              <li class="nav-item p-lg-2">
+                <%= link_to '+ Listing', new_listing_path, class: 'btn btn-primary' %>
+              </li>
+            <% end %>
             <li class="nav-item dropdown p-lg-1">
               <a class="btn btn-light dropdown-toggle d-flex align-items-center" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                 <% if current_user.profile_picture.attached? %>
