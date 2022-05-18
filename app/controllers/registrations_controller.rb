@@ -19,12 +19,14 @@ class RegistrationsController < Devise::RegistrationsController
   private
 
   def change_roles_on_user(user, roles)
-    old_roles = user.roles
-    old_roles.each do |role|
-      user.remove_role(role.name)
-    end
-    roles.each do |role|
-      user.add_role role if %w[student tutor].include?(role)
+    if roles.present?
+      old_roles = user.roles
+      old_roles.each do |role|
+        user.remove_role(role.name)
+      end
+      roles.each do |role|
+        user.add_role role if %w[student tutor].include?(role)
+      end
     end
   end
 end
