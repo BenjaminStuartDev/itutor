@@ -1,5 +1,6 @@
 class ListingsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
+  before_action :check_auth
   before_action :set_listing, only: %i[show update destroy edit]
   before_action :set_listing_subjects, only: %i[update create]
 
@@ -29,6 +30,10 @@ class ListingsController < ApplicationController
   end
 
   private
+
+  def check_auth
+    authorize Listing
+  end
 
   def set_listing_subjects
     @listing = Listing.new(tutor: current_user, **listing_params)

@@ -1,7 +1,14 @@
 class ApplicationController < ActionController::Base
+  include Pundit
   before_action :configure_permitted_parameters, if: :devise_controller?
+  rescue_from Pundit::NotAuthorizedError, with: :forbidden
 
   protected
+
+  def forbidden
+    flash[:alert] = "You are not authorized to perform that action. You can change your roles in Account."
+    redirect_to root_path
+  end
 
   def configure_permitted_parameters
     custom_fields = %i[name bio profile_picture roles]

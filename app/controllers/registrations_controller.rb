@@ -6,19 +6,23 @@ class RegistrationsController < Devise::RegistrationsController
 
   def create
     super do |user|
-      add_roles_to_user(user, params[:user][:roles])
+      change_roles_on_user(user, params[:user][:roles])
     end
   end
 
   def update
     super do |user|
-      add_roles_to_user(user, params[:user][:roles])
+      change_roles_on_user(user, params[:user][:roles])
     end
   end
 
   private
 
-  def add_roles_to_user(user, roles)
+  def change_roles_on_user(user, roles)
+    old_roles = user.roles
+    old_roles.each do |role|
+      user.remove_role(role.name)
+    end
     roles.each do |role|
       user.add_role role if %w[student tutor].include?(role)
     end

@@ -13,24 +13,25 @@ Review.destroy_all
 Role.destroy_all
 Subject.destroy_all
 
-student = User.create(name: 'John Smith', email: 'student@test.com', password: 'student123')
+student = User.create(name: 'John Smith', bio: 'Example bio', email: 'student@test.com', password: 'student123')
 student.add_role :student
 
-tutor = User.create(name: 'Jane Begley', email: 'tutor@test.com', password: 'tutor123')
+tutor = User.create(name: 'Jane Begley', bio: 'Example bio', email: 'tutor@test.com', password: 'tutor123')
 tutor.add_role :tutor
-
-listing = Listing.create(tutor: tutor, title: 'Listing 1', content: 'Some content')
-
-booking = Booking.create(student: student,  listing: listing, start: DateTime.new(2022, 6, 6, 12, 30, 0),
-                         finish: DateTime.new(2022, 6, 6, 13, 30, 0))
-
-review = Review.create(tutor: tutor, student: student, content: 'Some content', rating: 5)
 
 subjects = %w[English Maths Science]
 
 subjects.each do |subject|
   Subject.create(name: subject)
 end
+
+listing = Listing.create(tutor: tutor, title: 'Listing 1', content: 'Some content', subjects: subjects.first)
+
+booking = Booking.create(student: student,  listing: listing, start: DateTime.new(2022, 6, 6, 12, 30, 0),
+                         finish: DateTime.new(2022, 6, 6, 13, 30, 0))
+
+review = Review.create(tutor: tutor, student: student, content: 'Some content', rating: 5)
+
 
 listing.subjects << Subject.find_by(name: 'English')
 

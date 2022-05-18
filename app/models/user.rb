@@ -17,9 +17,7 @@ class User < ApplicationRecord
 
   before_destroy :remove_review_student_id, prepend: true
 
-  # validates :roles, acceptance: true
   validates :name, presence: true, length: { minimum: 3 }
-  # validates :profile_picture, presence: true
 
   def booking_with?(tutor)
     tutor.bookings_as_tutor.where(student: self).exists?

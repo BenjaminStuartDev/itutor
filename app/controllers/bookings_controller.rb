@@ -1,6 +1,8 @@
 class BookingsController < ApplicationController
   before_action :set_booking, only: %i[update destroy edit]
   before_action :set_listing, only: %i[new create]
+  before_action :authenticate_user!
+  before_action :check_auth
 
   def index
     @all_bookings = []
@@ -34,6 +36,10 @@ class BookingsController < ApplicationController
   end
 
   private
+
+  def check_auth
+    authorize Booking
+  end
 
   def set_listing
     @listing = Listing.find(params[:listing_id])

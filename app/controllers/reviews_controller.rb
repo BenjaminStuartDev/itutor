@@ -1,6 +1,9 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: %i[edit update destroy]
   before_action :review_params, only: %i[create update]
+  before_action :authenticate_user!
+  before_action :check_auth
+
   def index
     @reviews = current_user.made_reviews
   end
@@ -27,6 +30,9 @@ class ReviewsController < ApplicationController
   end
 
   private
+  def check_auth
+    authorize Review
+  end
 
   def review_params
     params.require(:review).permit(:content, :rating)

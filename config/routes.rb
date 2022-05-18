@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :watchlist, only: %i[index create destroy]
 
-  devise_for :users, controllers: {registrations: "registrations"}
+  devise_for :users, controllers: { registrations: 'registrations' }
 
   resources :reviews, except: %i[show new create]
 

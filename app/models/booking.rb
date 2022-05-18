@@ -4,7 +4,8 @@ class Booking < ApplicationRecord
 
   has_one :tutor, through: :listing
 
-  validates :tutor, :student, :start, presence: true
+  validates :student, presence: { message: 'must be signed in' }
+  validates :tutor, :start, presence: true
   validates :finish, comparison: { greater_than: :start }
   validate :booking_cannot_be_at_same_time_as_another_booking,
            :start_cannot_be_in_the_past

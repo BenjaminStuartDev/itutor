@@ -1,5 +1,7 @@
 class WatchlistController < ApplicationController
   before_action :set_listing, only: %i[create destroy]
+  before_action :authenticate_user!
+
   def index
     @watchlist = current_user.saved_listings
   end
