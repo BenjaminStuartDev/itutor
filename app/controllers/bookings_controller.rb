@@ -27,6 +27,10 @@ class BookingsController < ApplicationController
   def edit; end
 
   def update
+    if (session.owner != @booking.tutor) || (session.owner != @booking.student)
+      flash[:notice] = 'Access Denied'
+      redirect_to(bookings_path)
+    end
     update_validator(@booking, booking_params, bookings_path)
   end
 

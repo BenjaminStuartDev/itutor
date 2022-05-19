@@ -1,12 +1,12 @@
 # app/controllers/registrations_controller.rb
 class RegistrationsController < Devise::RegistrationsController
+  before_action :define_roles
+
   def new
-    @roles = Role.possible_roles
     super
   end
 
   def edit
-    @roles = Role.possible_roles
     super
   end
 
@@ -23,6 +23,10 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   private
+
+  def define_roles
+    @roles = Role.possible_roles
+  end
 
   def change_roles_on_user(user, roles)
     roles.reject!(&:empty?)

@@ -14,5 +14,4 @@ class Role < ApplicationRecord
   def self.possible_roles
     %i[student tutor]
   end
-
 end
