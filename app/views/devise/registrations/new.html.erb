@@ -13,7 +13,11 @@
 
   <div class="field">
   <%= f.label :roles %><br />
-  <%= f.collection_check_boxes :roles, @roles, :name, :resource_id %></div>
+  <% @roles.each do |role| %>
+    <%= f.label role %>
+    <%= f.check_box :roles, {multiple: true}, role, "" %><br />
+  <% end %>
+  </div>
 
   <div class="field">
   <%= f.label :bio %><br />
