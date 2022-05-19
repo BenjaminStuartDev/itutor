@@ -17,7 +17,6 @@
     <%= f.label role %>
     <%= f.check_box :roles, {multiple: true, checked: current_user.has_role?(role)}, role, "" %><br />
   <% end %>
-  <%# <%= f.collection_check_boxes :roles, @roles, :name, :resource_id do |b| %>
   </div>
   
 

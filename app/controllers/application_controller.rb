@@ -6,12 +6,12 @@ class ApplicationController < ActionController::Base
   protected
 
   def forbidden
-    flash[:alert] = "You are not authorized to perform that action. You can change your roles in Account."
+    flash[:alert] = 'You are not authorized to perform that action. You can change your roles in Account.'
     redirect_to root_path
   end
 
   def configure_permitted_parameters
-    custom_fields = [:name, :bio, :profile_picture]
+    custom_fields = %i[name bio profile_picture]
     devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(*custom_fields, :email, :password) }
 
     devise_parameter_sanitizer.permit(:account_update) do |u|
