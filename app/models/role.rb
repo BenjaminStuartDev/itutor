@@ -10,4 +10,9 @@ class Role < ApplicationRecord
             allow_nil: true
 
   scopify
+
+  def self.possible_roles
+    %i[student tutor]
+  end
+
 end

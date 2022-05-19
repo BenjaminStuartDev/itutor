@@ -1,6 +1,12 @@
 # app/controllers/registrations_controller.rb
 class RegistrationsController < Devise::RegistrationsController
   def new
+    @roles = Role.possible_roles
+    super
+  end
+
+  def edit
+    @roles = Role.possible_roles
     super
   end
 
@@ -19,14 +25,15 @@ class RegistrationsController < Devise::RegistrationsController
   private
 
   def change_roles_on_user(user, roles)
-    if roles.present?
-      old_roles = user.roles
-      old_roles.each do |role|
-        user.remove_role(role.name)
-      end
-      roles.each do |role|
-        user.add_role role if %w[student tutor].include?(role)
-      end
+    roles.reject!(&:empty?)
+    old_roles = user.roles
+    old_roles.each do |role|
+      user.remove_role(role.name)
+    end
+    return unless roles.present?
+
+    roles.each do |role|
+      user.add_role role if Role.possible_roles.map.include?(role.to_sym)
     end
   end
 end

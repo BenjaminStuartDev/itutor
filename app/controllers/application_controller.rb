@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    custom_fields = %i[name bio profile_picture roles]
+    custom_fields = [:name, :bio, :profile_picture]
     devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(*custom_fields, :email, :password) }
 
     devise_parameter_sanitizer.permit(:account_update) do |u|

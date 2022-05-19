@@ -13,7 +13,7 @@
 
   <div class="field">
   <%= f.label :roles %><br />
-  <%= f.collection_check_boxes :roles, Role.order(:name), :name, :resource_id %></div>
+  <%= f.collection_check_boxes :roles, @roles, :name, :resource_id %></div>
 
   <div class="field">
   <%= f.label :bio %><br />
