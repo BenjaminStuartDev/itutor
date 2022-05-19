@@ -21,10 +21,20 @@ class ListingsController < ApplicationController
   def edit; end
 
   def update
+    if (current_user != @listing.tutor) || (current_user.present? == false)
+      flash[:notice] = 'Access Denied'
+      return redirect_to(:root)
+    end
+
     update_validator(@listing, listing_params, @listing)
   end
 
   def destroy
+    if (current_user != @listing.tutor) || (current_user.present? == false)
+      flash[:notice] = 'Access Denied'
+      return redirect_to(:root)
+    end
+
     @listing.destroy
     redirect_to listings_path
   end

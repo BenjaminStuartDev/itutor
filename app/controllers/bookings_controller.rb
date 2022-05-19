@@ -27,14 +27,18 @@ class BookingsController < ApplicationController
   def edit; end
 
   def update
-    if (session.owner != @booking.tutor) || (session.owner != @booking.student)
+    if ((current_user != @booking.tutor) && (current_user != @booking.student)) || (current_user.present? == false)
       flash[:notice] = 'Access Denied'
-      redirect_to(bookings_path)
+      return redirect_to(:root)
     end
     update_validator(@booking, booking_params, bookings_path)
   end
 
   def destroy
+    if ((current_user != @booking.tutor) && (current_user != @booking.student)) || (current_user.present? == false)
+      flash[:notice] = 'Access Denied'
+      return redirect_to(:root)
+    end
     @booking.destroy
     redirect_to bookings_path
   end

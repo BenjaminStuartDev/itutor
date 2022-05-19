@@ -18,9 +18,18 @@ class ReviewsController < ApplicationController
     create_validator(@review, @review.tutor)
   end
 
-  def edit; end
+  def edit
+    if (current_user != @review.student) || (current_user.present? == false)
+      flash[:notice] = 'Access Denied'
+      return redirect_to(:root)
+    end
+  end
 
   def update
+    if (current_user != @review.student) || (current_user.present? == false)
+      flash[:notice] = 'Access Denied'
+      return redirect_to(:root)
+    end
     update_validator(@review, review_params, @review.tutor)
   end
 
