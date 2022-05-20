@@ -19,14 +19,17 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { minimum: 3 }
 
+  # returns boolean true if a user has a booking with the tutor
   def booking_with?(tutor)
     tutor.bookings_as_tutor.where(student: self).exists?
   end
 
+  # returns boolean true if a tutor has already been revied by the current user.
   def reviewed?(tutor)
     tutor.reviews.where(student: self).exists?
   end
 
+  # Removes the student_id foreign key from the review record in the review table
   def remove_review_student_id
     made_reviews.update_all(student_id: nil)
   end

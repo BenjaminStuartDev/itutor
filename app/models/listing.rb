@@ -6,6 +6,7 @@ class Listing < ApplicationRecord
 
   validates :tutor, :title, :content, :subjects, presence: true
 
+  # returns boolean true if the listing is already saved
   def already_saved?(user)
     user.saved_listings.include?(self)
   end

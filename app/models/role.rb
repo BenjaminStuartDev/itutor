@@ -11,6 +11,7 @@ class Role < ApplicationRecord
 
   scopify
 
+  # returns an array of symbols possible roles
   def self.possible_roles
     %i[student tutor]
   end
